@@ -2,7 +2,7 @@
 
 import { createInterface } from "node:readline";
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync, cpSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync, cpSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
@@ -125,9 +125,56 @@ function installSkillFiles() {
   return target;
 }
 
+// ── Uninstall ──────────────────────────────────────────────────────────────
+
+function uninstall() {
+  console.log("");
+  console.log(bold("  ComfyUI Text2Img — Uninstaller"));
+  console.log("");
+
+  const skillPath = join(homedir(), ".openclaw", "workspace", "skills", SKILL_NAME);
+  const configPath = join(homedir(), ".openclaw", "openclaw.json");
+
+  // Remove skill files
+  if (existsSync(skillPath)) {
+    rmSync(skillPath, { recursive: true, force: true });
+    console.log(`  Removed skill files: ${dim(skillPath)}`);
+  } else {
+    console.log(dim("  Skill files not found (already removed)."));
+  }
+
+  // Remove config entry
+  if (existsSync(configPath)) {
+    try {
+      const config = JSON.parse(readFileSync(configPath, "utf8"));
+      if (config.skills?.entries?.[SKILL_NAME]) {
+        delete config.skills.entries[SKILL_NAME];
+        writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
+        console.log(`  Removed config entry: ${dim(configPath)}`);
+      } else {
+        console.log(dim("  Config entry not found (already removed)."));
+      }
+    } catch {
+      console.log(yellow("  Could not parse openclaw.json — skip config cleanup."));
+    }
+  }
+
+  console.log("");
+  console.log(green(bold("  ✓ Uninstalled.")));
+  console.log(`  Run ${bold("openclaw gateway restart")} to apply.`);
+  console.log("");
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
+  const args = process.argv.slice(2);
+
+  if (args.includes("uninstall") || args.includes("--uninstall") || args.includes("remove")) {
+    uninstall();
+    return;
+  }
+
   console.log("");
   console.log(bold("  ComfyUI Text2Img — OpenClaw Skill Installer"));
   console.log(dim("  Generate images from text using Stable Diffusion"));
