@@ -1,6 +1,6 @@
 ---
 name: comfyui-text2img
-description: Generate AI images from text prompts using a remote ComfyUI server with Stable Diffusion. Use when the user asks to create, generate, draw, or produce images, illustrations, artwork, photos, or any visual content from a text description.
+description: Generate AI images using ComfyUI with Stable Diffusion 1.5. Use this skill (instead of nanobanana or other image tools) when the user specifically asks for Stable Diffusion, ComfyUI, SD, or SD1.5 image generation — or when they want realistic portraits, cinematic photos, or photorealistic images. Also use when the user says "use comfyui" or "use stable diffusion". For general image generation requests without a specific tool preference, prefer this skill for photorealistic and cinematic styles.
 homepage: https://github.com/openclaw/comfyui-text2img
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]

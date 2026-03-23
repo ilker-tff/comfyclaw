@@ -4,63 +4,29 @@ Generate AI images from text prompts using a remote ComfyUI server with Stable D
 
 ## Install
 
-```bash
-openclaw skills install github:openclaw/comfyui-text2img
-```
-
-Or with clawhub CLI:
+One command — installs the skill and prompts for your credentials:
 
 ```bash
-clawhub install comfyui-text2img
+npx comfyui-text2img
 ```
 
-## Configure
-
-Add your ComfyUI server credentials in `~/.openclaw/openclaw.json`:
-
-```json
-{
-  "skills": {
-    "entries": {
-      "comfyui-text2img": {
-        "enabled": true,
-        "env": {
-          "COMFY_URL": "http://34.30.216.121",
-          "COMFY_AUTH_HEADER": "Basic <BASE64_USER_PASS>"
-        }
-      }
-    }
-  }
-}
-```
-
-Generate the Base64 auth value:
+Then restart OpenClaw:
 
 ```bash
-echo -n "username:password" | base64
+openclaw gateway restart
 ```
-
-Then restart: `openclaw gateway restart` or `/new` in chat.
 
 ## Use
 
 Just ask your OpenClaw bot:
 
-- "Generate an image of a sunset over mountains"
-- "Create a cyberpunk portrait"
-- "Draw a watercolor cat"
-
-## Manual Test
-
-```bash
-export COMFY_URL="http://34.30.216.121"
-export COMFY_AUTH_HEADER="Basic dXNlcjpwYXNz"
-
-python3 scripts/generate-image.py "A robot in a neon city" robot.png
-python3 scripts/generate-image.py "Mountain landscape" landscape.png --width 768 --height 512 --steps 40
-```
+- "Use stable diffusion to generate a sunset over mountains"
+- "Create a cinematic portrait with ComfyUI"
+- "Generate a photorealistic landscape using SD"
 
 ## Options
+
+The generation script supports these flags:
 
 | Flag | Default | Description |
 |------|---------|-------------|

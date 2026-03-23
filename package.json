@@ -1,0 +1,27 @@
+{
+  "name": "comfyui-text2img",
+  "version": "1.0.0",
+  "description": "OpenClaw skill installer: Generate images from text using ComfyUI + Stable Diffusion",
+  "bin": {
+    "comfyui-text2img": "bin/install.mjs"
+  },
+  "files": [
+    "bin/",
+    "skill/"
+  ],
+  "keywords": [
+    "openclaw",
+    "comfyui",
+    "stable-diffusion",
+    "text2img",
+    "ai",
+    "image-generation",
+    "skill"
+  ],
+  "author": "ilker-tff",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilker-tff/comfyui-text2img"
+  }
+}
