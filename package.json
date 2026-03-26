@@ -1,19 +1,24 @@
 {
-  "name": "comfyui-text2img",
-  "version": "1.0.0",
-  "description": "OpenClaw skill installer: Generate images from text using ComfyUI + Stable Diffusion",
+  "name": "comfyui-skills",
+  "version": "2.0.0",
+  "description": "OpenClaw skill pack: 9 ComfyUI skills for image generation, video, cropping, remixing, and more",
   "bin": {
-    "comfyui-text2img": "bin/install.mjs"
+    "comfyui-skills": "bin/install.mjs"
   },
   "files": [
     "bin/",
-    "skill/"
+    "skills/"
   ],
   "keywords": [
     "openclaw",
     "comfyui",
     "stable-diffusion",
     "text2img",
+    "img2img",
+    "video",
+    "crop",
+    "portrait",
+    "lora",
     "ai",
     "image-generation",
     "skill"

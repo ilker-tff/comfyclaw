@@ -1,13 +1,13 @@
-# ComfyUI Text-to-Image Skill for OpenClaw
+# ComfyUI Skills for OpenClaw
 
-Generate AI images from text prompts using a remote ComfyUI server with Stable Diffusion 1.5.
+9 base skills + workflow chaining examples for image generation, video, cropping, remixing, and more — powered by a remote ComfyUI server.
 
 ## Install
 
-One command — installs the skill and prompts for your credentials:
+One command — installs all skills and prompts for your credentials:
 
 ```bash
-npx comfyui-text2img
+npx github:ilker-tff/comfyui-text2img
 ```
 
 Then restart OpenClaw:
@@ -16,34 +16,55 @@ Then restart OpenClaw:
 openclaw gateway restart
 ```
 
-## Use
+## Uninstall
 
-Just ask your OpenClaw bot:
+```bash
+npx github:ilker-tff/comfyui-text2img uninstall
+```
 
-- "Use stable diffusion to generate a sunset over mountains"
-- "Create a cinematic portrait with ComfyUI"
-- "Generate a photorealistic landscape using SD"
+## Skills included
 
-## Options
+### Generation (text → image/video)
+| Skill | Description |
+|-------|-------------|
+| `comfyui-generate-image` | Core text-to-image (512x512, any style) |
+| `comfyui-portrait` | Cinematic portraits optimized for faces (512x768) |
+| `comfyui-landscape-batch` | Multiple landscape variations (768x512, batch of 3) |
+| `comfyui-lora` | Generation with LoRA adapters for custom styles |
+| `comfyui-animated-webp` | Animated WebP loops (GIF-like) |
+| `comfyui-video-clip` | Real video clips using Wan 2.1 (848x480 MP4) |
 
-The generation script supports these flags:
+### Processing (image → image)
+| Skill | Description |
+|-------|-------------|
+| `comfyui-crop` | Crop regions, change aspect ratios |
+| `comfyui-img2img-remix` | Restyle/transform existing images |
+| `comfyui-crop-then-refine` | Crop + AI enhance in one step |
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--width` | 512 | Image width |
-| `--height` | 512 | Image height |
-| `--steps` | 35 | Sampling steps |
-| `--cfg` | 7.0 | CFG guidance scale |
-| `--seed` | random | Reproducibility seed |
-| `--negative` | `"watermark, text, blurry..."` | Negative prompt |
+### Reference
+| Skill | Description |
+|-------|-------------|
+| `comfyui-workflow-examples` | Chaining recipes — teaches the LLM how to combine skills |
 
-## Environment Variables
+## Skill chaining
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `COMFY_URL` | Yes | ComfyUI server URL |
-| `COMFY_AUTH_HEADER` | Yes | `Basic <base64(user:pass)>` |
-| `COMFY_CKPT` | No | Checkpoint (default: `sd1.5/juggernaut_reborn.safetensors`) |
+OpenClaw's LLM automatically chains skills based on your request:
+
+- "Generate a portrait and make it look like watercolor" → `portrait` → `img2img-remix`
+- "Create a landscape and crop to Instagram square" → `landscape-batch` → `crop`
+- "Generate a robot, then make it steampunk, then weather it" → `generate-image` → `img2img-remix` → `img2img-remix`
+
+The `comfyui-workflow-examples` skill teaches the LLM these patterns.
+
+## Environment variables
+
+Set automatically by the installer:
+
+| Variable | Description |
+|----------|-------------|
+| `COMFY_URL` | ComfyUI server URL |
+| `COMFY_AUTH_HEADER` | `Basic <base64(user:pass)>` |
+| `COMFY_CKPT` | Checkpoint override (optional, default: `sd1.5/juggernaut_reborn.safetensors`) |
 
 ## License
 
