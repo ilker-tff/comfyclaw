@@ -7,7 +7,7 @@ description: >
   unlike comfyui-animated-webp which just stitches independent frames.
   Output is MP4 (h264) at 848x480 (16:9 widescreen), ~1.5 seconds at 16fps.
   This is significantly slower than image generation (~60-120 seconds).
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

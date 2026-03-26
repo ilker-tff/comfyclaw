@@ -1,9 +1,9 @@
 {
-  "name": "comfyui-skills",
+  "name": "comfyclaw",
   "version": "2.0.0",
   "description": "OpenClaw skill pack: 9 ComfyUI skills for image generation, video, cropping, remixing, and more",
   "bin": {
-    "comfyui-skills": "bin/install.mjs"
+    "comfyclaw": "bin/install.mjs"
   },
   "files": [
     "bin/",
@@ -27,6 +27,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ilker-tff/comfyui-text2img"
+    "url": "https://github.com/ilker-tff/comfyclaw"
   }
 }

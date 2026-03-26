@@ -10,7 +10,7 @@ description: >
   for portraits (use comfyui-portrait), landscapes (use comfyui-landscape-batch),
   animations (use comfyui-animated-webp), video (use comfyui-video-clip), or
   image-to-image transformation (use comfyui-img2img-remix).
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

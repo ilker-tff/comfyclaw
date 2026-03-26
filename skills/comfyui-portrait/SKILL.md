@@ -6,7 +6,7 @@ description: >
   portrait, face shot, profile picture, or avatar. This skill uses portrait-optimized
   dimensions (512x768 vertical) and higher step count for better facial detail.
   For non-portrait images, use comfyui-generate-image instead.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

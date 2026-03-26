@@ -7,7 +7,7 @@ description: >
   style that requires a LoRA adapter. The user must specify which LoRA file to
   use. If you don't know which LoRA is available, ask the user.
   For general image generation without LoRA, use comfyui-generate-image instead.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

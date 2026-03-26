@@ -7,7 +7,7 @@
 One command — installs all skills and prompts for your credentials:
 
 ```bash
-npx github:ilker-tff/comfyui-text2img
+npx github:ilker-tff/comfyclaw
 ```
 
 Then restart OpenClaw:
@@ -19,7 +19,7 @@ openclaw gateway restart
 ## Uninstall
 
 ```bash
-npx github:ilker-tff/comfyui-text2img uninstall
+npx github:ilker-tff/comfyclaw uninstall
 ```
 
 ## Skills included

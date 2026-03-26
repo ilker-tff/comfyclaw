@@ -8,7 +8,7 @@ description: >
   style", "make this more cinematic". This skill preserves the composition and
   structure of the original while changing its visual style.
   Requires an existing image as input — does NOT generate from scratch.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

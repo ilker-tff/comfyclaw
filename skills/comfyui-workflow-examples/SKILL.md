@@ -6,7 +6,7 @@ description: >
   requires multiple steps (e.g. "generate an image and then crop it", "create a
   portrait and make it look like watercolor"). Each example shows which skills to
   run in sequence and how to pass outputs between them.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: []
 metadata.clawdbot.requires.env: []

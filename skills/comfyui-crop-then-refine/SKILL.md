@@ -8,7 +8,7 @@ description: >
   that corner and refine the details". This combines cropping + img2img in a
   single operation — more efficient than chaining comfyui-crop then comfyui-img2img-remix separately.
   If the user just wants to crop without any style change, use comfyui-crop instead.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

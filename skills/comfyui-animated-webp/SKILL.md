@@ -6,7 +6,7 @@ description: >
   animated sticker, or looping image. Produces a batch of frames compiled into a
   WebP animation. This is NOT video — it's a lightweight looping animation (like a
   GIF but better quality). For actual video (MP4), use comfyui-video-clip instead.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

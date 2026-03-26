@@ -6,7 +6,7 @@ description: >
   wants to resize an image to specific dimensions by cropping (e.g. "make it
   square", "crop to Instagram format", "crop to widescreen 16:9").
   This skill requires an existing image as input — it does NOT generate new images.
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]

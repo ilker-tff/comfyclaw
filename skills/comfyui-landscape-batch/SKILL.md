@@ -7,7 +7,7 @@ description: >
   Produces 3 variations by default at 768x512 (widescreen 3:2 aspect ratio).
   Use this instead of comfyui-generate-image when the user says "landscape",
   "scenery", "environment", "panorama", or wants "a few options" / "variations".
-homepage: https://github.com/ilker-tff/comfyui-text2img
+homepage: https://github.com/ilker-tff/comfyclaw
 metadata.clawdbot.os: ["darwin", "linux"]
 metadata.clawdbot.requires.bins: ["python3"]
 metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
