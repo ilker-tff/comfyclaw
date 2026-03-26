@@ -133,12 +133,68 @@ function updateOpenclawConfig(comfyUrl, authHeader) {
   return configPath;
 }
 
+// ── Detect OpenClaw skills directory ────────────────────────────────────────
+
+function findSkillsDir() {
+  // 1. Try to find openclaw binary and resolve its package skills dir
+  try {
+    const openclawBin = execSync("which openclaw", { encoding: "utf8" }).trim();
+    if (openclawBin) {
+      // Follow symlinks: openclaw bin -> ../lib/node_modules/openclaw/...
+      let resolved;
+      try {
+        resolved = execSync(`readlink -f "${openclawBin}" 2>/dev/null || readlink "${openclawBin}" 2>/dev/null`, { encoding: "utf8" }).trim();
+      } catch {
+        resolved = openclawBin;
+      }
+      // Walk up to find the openclaw package root
+      // Binary is at .../node_modules/openclaw/bin/... or .../bin/openclaw
+      const parts = resolved.split("/");
+      const nmIdx = parts.lastIndexOf("node_modules");
+      if (nmIdx !== -1) {
+        const pkgSkills = join(parts.slice(0, nmIdx + 1).join("/"), "openclaw", "skills");
+        if (existsSync(pkgSkills)) return pkgSkills;
+      }
+      // Alternative: binary at .../bin/openclaw -> sibling lib/node_modules/openclaw/skills
+      const binDir = dirname(resolved);
+      const candidate = join(dirname(binDir), "lib", "node_modules", "openclaw", "skills");
+      if (existsSync(candidate)) return candidate;
+    }
+  } catch { /* openclaw not in PATH */ }
+
+  // 2. Fallback: check common locations
+  const fallbacks = [
+    join(homedir(), ".nvm", "versions", "node"),  // nvm installs
+    join("/usr", "local", "lib", "node_modules", "openclaw", "skills"),
+    join("/usr", "lib", "node_modules", "openclaw", "skills"),
+  ];
+
+  // Check nvm versions
+  const nvmBase = join(homedir(), ".nvm", "versions", "node");
+  if (existsSync(nvmBase)) {
+    try {
+      const versions = readdirSync(nvmBase).sort().reverse();
+      for (const v of versions) {
+        const candidate = join(nvmBase, v, "lib", "node_modules", "openclaw", "skills");
+        if (existsSync(candidate)) return candidate;
+      }
+    } catch { /* ignore */ }
+  }
+
+  for (const fb of fallbacks) {
+    if (existsSync(fb)) return fb;
+  }
+
+  // 3. Last resort: workspace dir
+  return join(homedir(), ".openclaw", "workspace", "skills");
+}
+
 // ── Skill file copy ────────────────────────────────────────────────────────
 
 function installSkillFiles() {
   const skillsSource = join(__dirname, "..", "skills");
   const sharedSource = join(skillsSource, "shared", "comfy_lib.py");
-  const baseTarget = join(homedir(), ".openclaw", "workspace", "skills");
+  const baseTarget = findSkillsDir();
   const installed = [];
 
   for (const skill of SKILLS) {
@@ -175,7 +231,9 @@ function uninstall() {
   console.log(bold("  ComfyUI Skills — Uninstaller"));
   console.log("");
 
-  const baseTarget = join(homedir(), ".openclaw", "workspace", "skills");
+  const baseTarget = findSkillsDir();
+  console.log(`  Skills dir: ${dim(baseTarget)}`);
+  console.log("");
   const configPath = join(homedir(), ".openclaw", "openclaw.json");
   let removedCount = 0;
 
