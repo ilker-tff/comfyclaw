@@ -1,24 +1,52 @@
 ---
 name: comfyui-download-image
-description: >
-  Download a generated image from the ComfyUI server to a local file.
-  Use this skill after any image generation skill to save the result locally
-  so it can be sent to the user or processed further. Takes the image metadata
-  (filename, subfolder, type) from a generation skill's output and downloads
-  the actual image file. This is the bridge between server-side generation
-  and local file access.
+description: "Download a generated image from the ComfyUI server to a local file. Use this skill after any image generation skill to save the result locally so it can be sent to the user or processed further. Takes the image metadata (filename, subfolder, type) from a generation skill's output and downloads the actual image file. This is the bridge between server-side generation and local file access."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["download", "image", "utility", "comfyui", "output"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "text/json"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-flux-multi-img2img", "comfyui-preview-image", "comfyui-preview-img2img", "comfyui-preview-character"]
-metadata.clawdbot.priority: 85
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "download",
+            "image",
+            "utility",
+            "comfyui",
+            "output"
+        ],
+        "category": "utility",
+        "input_type": "text/json",
+        "output_type": "image/png",
+        "output_can_feed_into": [],
+        "accepts_input_from": [
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-landscape-batch",
+            "comfyui-lora",
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-flux-multi-img2img",
+            "comfyui-preview-image",
+            "comfyui-preview-img2img",
+            "comfyui-preview-character"
+        ],
+        "priority": 85,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Download Image

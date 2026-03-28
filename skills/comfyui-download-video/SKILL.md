@@ -1,22 +1,44 @@
 ---
 name: comfyui-download-video
-description: >
-  Download a generated video from the ComfyUI server to a local file.
-  Use this skill after any video generation skill to save the result locally
-  so it can be sent to the user. Takes the video metadata (filename, subfolder,
-  type) from a generation skill's output and downloads the actual video file.
+description: "Download a generated video from the ComfyUI server to a local file. Use this skill after any video generation skill to save the result locally so it can be sent to the user. Takes the video metadata (filename, subfolder, type) from a generation skill's output and downloads the actual video file."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["download", "video", "utility", "comfyui", "output"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "text/json"
-metadata.clawdbot.output_type: "video/mp4"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: ["comfyui-video-clip", "comfyui-img2video", "comfyui-animated-webp"]
-metadata.clawdbot.priority: 85
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "download",
+            "video",
+            "utility",
+            "comfyui",
+            "output"
+        ],
+        "category": "utility",
+        "input_type": "text/json",
+        "output_type": "video/mp4",
+        "output_can_feed_into": [],
+        "accepts_input_from": [
+            "comfyui-video-clip",
+            "comfyui-img2video",
+            "comfyui-animated-webp"
+        ],
+        "priority": 85,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Download Video

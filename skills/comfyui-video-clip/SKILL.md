@@ -1,24 +1,44 @@
 ---
 name: comfyui-video-clip
-description: >
-  Generate short video clips from text descriptions using the Wan 2.1 video model.
-  Use this skill when the user asks for a video, video clip, MP4, motion content,
-  or cinematic footage. Produces real video with temporal coherence (smooth motion)
-  unlike comfyui-animated-webp which just stitches independent frames.
-  Output is MP4 (h264) at 848x480 (16:9 widescreen), ~1.5 seconds at 16fps.
-  This is significantly slower than image generation (~60-120 seconds).
+description: "Generate short video clips from text descriptions using the Wan 2.1 video model. Use this skill when the user asks for a video, video clip, MP4, motion content, or cinematic footage. Produces real video with temporal coherence (smooth motion) unlike comfyui-animated-webp which just stitches independent frames. Output is MP4 (h264) at 848x480 (16:9 widescreen), ~1.5 seconds at 16fps. This is significantly slower than image generation (~60-120 seconds)."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["video", "mp4", "text-to-video", "clip", "motion", "cinematic", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "video/mp4"
-metadata.clawdbot.output_can_feed_into: ["comfyui-download-video"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 70
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "video",
+            "mp4",
+            "text-to-video",
+            "clip",
+            "motion",
+            "cinematic",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "video/mp4",
+        "output_can_feed_into": [
+            "comfyui-download-video"
+        ],
+        "accepts_input_from": [],
+        "priority": 70,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Video Clip Generation

@@ -1,25 +1,51 @@
 ---
 name: comfyui-crop-then-refine
-description: >
-  Crop a region from an image AND apply AI refinement to enhance it in one step.
-  Use this skill when the user wants to extract a specific area from an image
-  and improve or transform it simultaneously. Examples: "zoom into the face and
-  make it sharper", "crop the background and make it more dramatic", "extract
-  that corner and refine the details". This combines cropping + img2img in a
-  single operation — more efficient than chaining comfyui-crop then comfyui-img2img-remix separately.
-  If the user just wants to crop without any style change, use comfyui-crop instead.
+description: "Crop a region from an image AND apply AI refinement to enhance it in one step. Use this skill when the user wants to extract a specific area from an image and improve or transform it simultaneously. Examples: "zoom into the face and make it sharper", "crop the background and make it more dramatic", "extract that corner and refine the details". This combines cropping + img2img in a single operation — more efficient than chaining comfyui-crop then comfyui-img2img-remix separately. If the user just wants to crop without any style change, use comfyui-crop instead."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["crop", "refine", "enhance", "img2img", "comfyui"]
-metadata.clawdbot.category: "image-processing"
-metadata.clawdbot.input_type: "image/png"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-img2img-remix"]
-metadata.clawdbot.priority: 80
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "crop",
+            "refine",
+            "enhance",
+            "img2img",
+            "comfyui"
+        ],
+        "category": "image-processing",
+        "input_type": "image/png",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-landscape-batch",
+            "comfyui-lora",
+            "comfyui-img2img-remix"
+        ],
+        "priority": 80,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Crop Then Refine

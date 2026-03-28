@@ -1,21 +1,40 @@
 ---
 name: comfyui-queue-status
-description: >
-  Check the ComfyUI job queue — how many jobs are currently running and pending.
-  Use this to check if the server is busy before submitting new work, or to explain
-  to the user why their generation might be slow (other jobs ahead in queue).
+description: "Check the ComfyUI job queue — how many jobs are currently running and pending. Use this to check if the server is busy before submitting new work, or to explain to the user why their generation might be slow (other jobs ahead in queue)."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["queue", "status", "monitoring", "jobs", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "none"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 60
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "queue",
+            "status",
+            "monitoring",
+            "jobs",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "none",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 60,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Queue Status

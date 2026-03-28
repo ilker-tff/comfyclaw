@@ -1,19 +1,29 @@
 ---
 name: comfyui-workflow-examples
-description: >
-  REFERENCE ONLY — not an executable skill. This document teaches you how to chain
-  ComfyUI skills together for complex requests. Read this when the user's request
-  requires multiple steps (e.g. "generate an image and then crop it", "create a
-  portrait and make it look like watercolor", "upload my photo and turn it into a video").
-  Each example shows which skills to run in sequence and how to pass outputs between them.
-  Also covers utility skills: checking server status, monitoring progress, managing assets.
+description: "REFERENCE ONLY — not an executable skill. This document teaches you how to chain ComfyUI skills together for complex requests. Read this when the user's request requires multiple steps (e.g. "generate an image and then crop it", "create a portrait and make it look like watercolor", "upload my photo and turn it into a video"). Each example shows which skills to run in sequence and how to pass outputs between them. Also covers utility skills: checking server status, monitoring progress, managing assets."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: []
-metadata.clawdbot.requires.env: []
-metadata.clawdbot.files: []
-metadata.clawdbot.tags: ["reference", "chaining", "workflow", "examples", "comfyui", "pipeline"]
-metadata.clawdbot.category: "reference"
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [],
+            "env": []
+        },
+        "tags": [
+            "reference",
+            "chaining",
+            "workflow",
+            "examples",
+            "comfyui",
+            "pipeline"
+        ],
+        "category": "reference",
+        "files": []
+    }
+}
 ---
 
 # ComfyUI Workflow Chaining Guide

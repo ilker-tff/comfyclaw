@@ -1,21 +1,40 @@
 ---
 name: comfyui-delete-job
-description: >
-  Delete or cancel a ComfyUI generation job from the queue. Use this skill
-  to cancel a stuck or unwanted generation job. Can remove jobs from either
-  the running or pending queue. Takes the prompt ID of the job to cancel.
+description: "Delete or cancel a ComfyUI generation job from the queue. Use this skill to cancel a stuck or unwanted generation job. Can remove jobs from either the running or pending queue. Takes the prompt ID of the job to cancel."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["cancel", "delete", "queue", "utility", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 40
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "cancel",
+            "delete",
+            "queue",
+            "utility",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "text",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 40,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Delete Job

@@ -1,22 +1,40 @@
 ---
 name: comfyui-list-assets
-description: >
-  List files available in ComfyUI's input and output directories. Use this
-  skill to see what images and videos have been uploaded or generated on the
-  server. Helpful for finding previously uploaded inputs or browsing generated
-  outputs without downloading them.
+description: "List files available in ComfyUI's input and output directories. Use this skill to see what images and videos have been uploaded or generated on the server. Helpful for finding previously uploaded inputs or browsing generated outputs without downloading them."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["assets", "files", "listing", "utility", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: none
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 50
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "assets",
+            "files",
+            "listing",
+            "utility",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "none",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 50,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI List Assets

@@ -1,27 +1,45 @@
 ---
 name: comfyui-generate-image
-description: >
-  Generate images from text descriptions using ComfyUI with Stable Diffusion 1.5.
-  This is the PRIMARY image generation skill. Use it when the user asks to create,
-  generate, draw, paint, render, or make any image from a text description.
-  Handles all styles: photorealistic, cinematic, artistic, illustration, fantasy,
-  product photography, concept art, and more.
-  Use this skill for ANY text-to-image request unless the user specifically asks
-  for portraits (use comfyui-portrait), landscapes (use comfyui-landscape-batch),
-  animations (use comfyui-animated-webp), video (use comfyui-video-clip), or
-  image-to-image transformation (use comfyui-img2img-remix).
+description: "Generate images from text descriptions using ComfyUI with Stable Diffusion 1.5. This is the PRIMARY image generation skill. Use it when the user asks to create, generate, draw, paint, render, or make any image from a text description. Handles all styles: photorealistic, cinematic, artistic, illustration, fantasy, product photography, concept art, and more. Use this skill for ANY text-to-image request unless the user specifically asks for portraits (use comfyui-portrait), landscapes (use comfyui-landscape-batch), animations (use comfyui-animated-webp), video (use comfyui-video-clip), or image-to-image transformation (use comfyui-img2img-remix)."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["image-generation", "text-to-image", "stable-diffusion", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 100
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "image-generation",
+            "text-to-image",
+            "stable-diffusion",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 100,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Image Generation

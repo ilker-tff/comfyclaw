@@ -1,23 +1,46 @@
 ---
 name: comfyui-portrait
-description: >
-  Generate high-quality cinematic portrait images optimized for faces and people.
-  Use this skill when the user specifically asks for a portrait, headshot, character
-  portrait, face shot, profile picture, or avatar. This skill uses portrait-optimized
-  dimensions (512x768 vertical) and higher step count for better facial detail.
-  For non-portrait images, use comfyui-generate-image instead.
+description: "Generate high-quality cinematic portrait images optimized for faces and people. Use this skill when the user specifically asks for a portrait, headshot, character portrait, face shot, profile picture, or avatar. This skill uses portrait-optimized dimensions (512x768 vertical) and higher step count for better facial detail. For non-portrait images, use comfyui-generate-image instead."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["portrait", "face", "character", "headshot", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 95
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "portrait",
+            "face",
+            "character",
+            "headshot",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 95,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Cinematic Portrait

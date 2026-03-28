@@ -1,21 +1,44 @@
 ---
 name: comfyui-preview-character
-description: >
-  Quick character concept preview using 12-step generation. Use when the user
-  wants to rapidly iterate on character designs -- explore different looks,
-  outfits, poses before committing to full quality.
+description: "Quick character concept preview using 12-step generation. Use when the user wants to rapidly iterate on character designs -- explore different looks, outfits, poses before committing to full quality."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["preview", "character", "concept", "fast", "design"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-generate-image", "comfyui-portrait", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 70
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "preview",
+            "character",
+            "concept",
+            "fast",
+            "design"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 70,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Preview Character (Fast Concept)

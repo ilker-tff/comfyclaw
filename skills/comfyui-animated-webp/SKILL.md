@@ -1,23 +1,44 @@
 ---
 name: comfyui-animated-webp
-description: >
-  Generate animated WebP images (short looping animations) from text descriptions.
-  Use this skill when the user wants an animation, animated image, GIF-like output,
-  animated sticker, or looping image. Produces a batch of frames compiled into a
-  WebP animation. This is NOT video — it's a lightweight looping animation (like a
-  GIF but better quality). For actual video (MP4), use comfyui-video-clip instead.
+description: "Generate animated WebP images (short looping animations) from text descriptions. Use this skill when the user wants an animation, animated image, GIF-like output, animated sticker, or looping image. Produces a batch of frames compiled into a WebP animation. This is NOT video — it's a lightweight looping animation (like a GIF but better quality). For actual video (MP4), use comfyui-video-clip instead."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["animation", "animated", "webp", "gif", "sticker", "loop", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/webp"
-metadata.clawdbot.output_can_feed_into: ["comfyui-download-video"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 70
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "animation",
+            "animated",
+            "webp",
+            "gif",
+            "sticker",
+            "loop",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/webp",
+        "output_can_feed_into": [
+            "comfyui-download-video"
+        ],
+        "accepts_input_from": [],
+        "priority": 70,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Animated WebP

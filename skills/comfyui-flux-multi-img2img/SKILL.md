@@ -1,22 +1,47 @@
 ---
 name: comfyui-flux-multi-img2img
-description: >
-  Generate a single image by blending 2-3 reference images using the Flux model.
-  Use when the user wants to combine elements from multiple images, or create a
-  composite from several references. Requires images to be uploaded first via
-  comfyui-upload-image.
+description: "Generate a single image by blending 2-3 reference images using the Flux model. Use when the user wants to combine elements from multiple images, or create a composite from several references. Requires images to be uploaded first via comfyui-upload-image."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["flux", "img2img", "multi-reference", "blend", "composite"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text/json"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: ["comfyui-upload-image"]
-metadata.clawdbot.priority: 80
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "flux",
+            "img2img",
+            "multi-reference",
+            "blend",
+            "composite"
+        ],
+        "category": "media-generation",
+        "input_type": "text/json",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [
+            "comfyui-upload-image"
+        ],
+        "priority": 80,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Flux Multi-Image Blend

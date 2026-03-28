@@ -1,22 +1,47 @@
 ---
 name: comfyui-img2video
-description: >
-  Generate a short video clip from a still image using the LTX-Video model.
-  Use when the user wants to animate a photo or generated image. The input image
-  must be uploaded to ComfyUI first via comfyui-upload-image. Produces MP4 video
-  at 24fps.
+description: "Generate a short video clip from a still image using the LTX-Video model. Use when the user wants to animate a photo or generated image. The input image must be uploaded to ComfyUI first via comfyui-upload-image. Produces MP4 video at 24fps."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["video", "img2video", "ltxv", "animation", "motion"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text/json"
-metadata.clawdbot.output_type: "video/mp4"
-metadata.clawdbot.output_can_feed_into: ["comfyui-download-video"]
-metadata.clawdbot.accepts_input_from: ["comfyui-upload-image", "comfyui-generate-image", "comfyui-portrait", "comfyui-flux-multi-img2img"]
-metadata.clawdbot.priority: 80
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "video",
+            "img2video",
+            "ltxv",
+            "animation",
+            "motion"
+        ],
+        "category": "media-generation",
+        "input_type": "text/json",
+        "output_type": "video/mp4",
+        "output_can_feed_into": [
+            "comfyui-download-video"
+        ],
+        "accepts_input_from": [
+            "comfyui-upload-image",
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-flux-multi-img2img"
+        ],
+        "priority": 80,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Image-to-Video (LTX-Video)

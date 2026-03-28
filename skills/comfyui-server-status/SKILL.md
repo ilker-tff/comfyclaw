@@ -1,21 +1,41 @@
 ---
 name: comfyui-server-status
-description: >
-  Check ComfyUI server health, system stats, GPU info, and queue state.
-  Use this when the user asks if the server is up, wants to know GPU/memory usage,
-  or before starting a batch of work to verify the server is healthy and available.
+description: "Check ComfyUI server health, system stats, GPU info, and queue state. Use this when the user asks if the server is up, wants to know GPU/memory usage, or before starting a batch of work to verify the server is healthy and available."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["server", "health", "status", "gpu", "system", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "none"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 60
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "server",
+            "health",
+            "status",
+            "gpu",
+            "system",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "none",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 60,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Server Status

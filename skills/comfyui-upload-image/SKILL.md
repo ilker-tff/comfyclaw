@@ -1,24 +1,46 @@
 ---
 name: comfyui-upload-image
-description: >
-  Upload a local image file to the ComfyUI server's input storage.
-  Use this skill when the user provides or sends an image that needs to be
-  processed by other ComfyUI skills (img2img, video generation, multi-image
-  compositing, cropping, etc). This skill MUST run BEFORE any skill that
-  needs a user-provided image. It transfers the file to the server and returns
-  the server-side filename that downstream skills reference.
+description: "Upload a local image file to the ComfyUI server's input storage. Use this skill when the user provides or sends an image that needs to be processed by other ComfyUI skills (img2img, video generation, multi-image compositing, cropping, etc). This skill MUST run BEFORE any skill that needs a user-provided image. It transfers the file to the server and returns the server-side filename that downstream skills reference."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["upload", "image", "utility", "comfyui", "input"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "image/*"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: ["comfyui-img2img-remix", "comfyui-flux-multi-img2img", "comfyui-img2video", "comfyui-crop", "comfyui-crop-then-refine"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 90
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "upload",
+            "image",
+            "utility",
+            "comfyui",
+            "input"
+        ],
+        "category": "utility",
+        "input_type": "image/*",
+        "output_type": "text/json",
+        "output_can_feed_into": [
+            "comfyui-img2img-remix",
+            "comfyui-flux-multi-img2img",
+            "comfyui-img2video",
+            "comfyui-crop",
+            "comfyui-crop-then-refine"
+        ],
+        "accepts_input_from": [],
+        "priority": 90,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Upload Image

@@ -1,25 +1,53 @@
 ---
 name: comfyui-img2img-remix
-description: >
-  Transform an existing image into a new style or variation using img2img.
-  Use this skill when the user has an existing image and wants to change its style,
-  repaint it, remix it, or apply artistic transformations. Examples: "make this look
-  like a watercolor", "turn this photo into anime style", "repaint this in cyberpunk
-  style", "make this more cinematic". This skill preserves the composition and
-  structure of the original while changing its visual style.
-  Requires an existing image as input — does NOT generate from scratch.
+description: "Transform an existing image into a new style or variation using img2img. Use this skill when the user has an existing image and wants to change its style, repaint it, remix it, or apply artistic transformations. Examples: "make this look like a watercolor", "turn this photo into anime style", "repaint this in cyberpunk style", "make this more cinematic". This skill preserves the composition and structure of the original while changing its visual style. Requires an existing image as input — does NOT generate from scratch."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["image-to-image", "style-transfer", "remix", "transformation", "comfyui"]
-metadata.clawdbot.category: "image-processing"
-metadata.clawdbot.input_type: "image/png"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-crop", "comfyui-upload-image"]
-metadata.clawdbot.priority: 85
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "image-to-image",
+            "style-transfer",
+            "remix",
+            "transformation",
+            "comfyui"
+        ],
+        "category": "image-processing",
+        "input_type": "image/png",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-landscape-batch",
+            "comfyui-lora",
+            "comfyui-crop",
+            "comfyui-upload-image"
+        ],
+        "priority": 85,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Image-to-Image Remix

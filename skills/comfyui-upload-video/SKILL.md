@@ -1,22 +1,40 @@
 ---
 name: comfyui-upload-video
-description: >
-  Upload a local video file to the ComfyUI server's input storage.
-  Use this skill when the user provides a video file that needs to be
-  processed by ComfyUI skills. Transfers the video to the server and
-  returns the server-side filename for downstream skills to reference.
+description: "Upload a local video file to the ComfyUI server's input storage. Use this skill when the user provides a video file that needs to be processed by ComfyUI skills. Transfers the video to the server and returns the server-side filename for downstream skills to reference."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["upload", "video", "utility", "comfyui", "input"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "video/*"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 90
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "upload",
+            "video",
+            "utility",
+            "comfyui",
+            "input"
+        ],
+        "category": "utility",
+        "input_type": "video/*",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 90,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Upload Video

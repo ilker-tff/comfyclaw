@@ -1,20 +1,44 @@
 ---
 name: comfyui-preview-img2img
-description: >
-  Quick preview of an image-to-image transformation with only 12 steps. Use to
-  test how a restyle will look before committing to full generation.
+description: "Quick preview of an image-to-image transformation with only 12 steps. Use to test how a restyle will look before committing to full generation."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["preview", "fast", "img2img", "draft"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "image/*"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-img2img-remix", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: ["comfyui-upload-image"]
-metadata.clawdbot.priority: 70
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "preview",
+            "fast",
+            "img2img",
+            "draft"
+        ],
+        "category": "media-generation",
+        "input_type": "image/*",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-img2img-remix",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [
+            "comfyui-upload-image"
+        ],
+        "priority": 70,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Preview Img2Img (Fast Draft)

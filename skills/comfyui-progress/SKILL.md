@@ -1,23 +1,40 @@
 ---
 name: comfyui-progress
-description: >
-  Check the progress of a running ComfyUI generation job. Use this when a generation
-  is in progress and you want to report the completion percentage to the user.
-  Especially useful for long-running jobs like video generation (10-15 minutes).
-  Tries the /progress endpoint first, falls back to queue/history-based estimation.
-  Returns percentage, status (running/pending/done/idle), and queue info.
+description: "Check the progress of a running ComfyUI generation job. Use this when a generation is in progress and you want to report the completion percentage to the user. Especially useful for long-running jobs like video generation (10-15 minutes). Tries the /progress endpoint first, falls back to queue/history-based estimation. Returns percentage, status (running/pending/done/idle), and queue info."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["progress", "monitoring", "status", "polling", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 70
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "progress",
+            "monitoring",
+            "status",
+            "polling",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "text",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 70,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Progress Check

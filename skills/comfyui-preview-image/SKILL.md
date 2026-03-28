@@ -1,22 +1,42 @@
 ---
 name: comfyui-preview-image
-description: >
-  Quick preview image generation with only 12 sampling steps. Use when the user
-  wants to quickly check if a prompt looks right before running a full-quality
-  generation. Much faster than comfyui-generate-image but lower quality. Good
-  for iterating.
+description: "Quick preview image generation with only 12 sampling steps. Use when the user wants to quickly check if a prompt looks right before running a full-quality generation. Much faster than comfyui-generate-image but lower quality. Good for iterating."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["preview", "fast", "draft", "quick"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-generate-image", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 75
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "preview",
+            "fast",
+            "draft",
+            "quick"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-generate-image",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 75,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Preview Image (Fast Draft)

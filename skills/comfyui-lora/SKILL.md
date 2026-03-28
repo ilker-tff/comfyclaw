@@ -1,25 +1,46 @@
 ---
 name: comfyui-lora
-description: >
-  Generate images using a LoRA (Low-Rank Adaptation) model for specific styles
-  or characters. Use this skill when the user mentions a specific LoRA model,
-  wants a consistent character or brand style, or asks for a specialized art
-  style that requires a LoRA adapter. The user must specify which LoRA file to
-  use. If you don't know which LoRA is available, use comfyui-validate-models
-  to list available LoRA models before asking the user.
-  For general image generation without LoRA, use comfyui-generate-image instead.
+description: "Generate images using a LoRA (Low-Rank Adaptation) model for specific styles or characters. Use this skill when the user mentions a specific LoRA model, wants a consistent character or brand style, or asks for a specialized art style that requires a LoRA adapter. The user must specify which LoRA file to use. If you don't know which LoRA is available, use comfyui-validate-models to list available LoRA models before asking the user. For general image generation without LoRA, use comfyui-generate-image instead."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["lora", "style", "character", "fine-tuned", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 75
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "lora",
+            "style",
+            "character",
+            "fine-tuned",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 75,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI LoRA Generation

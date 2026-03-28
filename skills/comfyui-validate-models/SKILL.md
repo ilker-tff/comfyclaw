@@ -1,23 +1,41 @@
 ---
 name: comfyui-validate-models
-description: >
-  List available models on the ComfyUI server and validate whether specific
-  models exist. Use this skill when the user asks what models, LoRAs, or
-  checkpoints are available, or before using a specific model to verify it
-  exists on the server. Can filter by model group (checkpoints, vae, clip,
-  lora, unet) and check for specific model names.
+description: "List available models on the ComfyUI server and validate whether specific models exist. Use this skill when the user asks what models, LoRAs, or checkpoints are available, or before using a specific model to verify it exists on the server. Can filter by model group (checkpoints, vae, clip, lora, unet) and check for specific model names."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["models", "validation", "lora", "checkpoint", "utility", "comfyui"]
-metadata.clawdbot.category: "utility"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "text/json"
-metadata.clawdbot.output_can_feed_into: []
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 50
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "models",
+            "validation",
+            "lora",
+            "checkpoint",
+            "utility",
+            "comfyui"
+        ],
+        "category": "utility",
+        "input_type": "text",
+        "output_type": "text/json",
+        "output_can_feed_into": [],
+        "accepts_input_from": [],
+        "priority": 50,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Validate Models

@@ -1,23 +1,51 @@
 ---
 name: comfyui-crop
-description: >
-  Crop a rectangular region from an existing image. Use this skill when the user
-  wants to cut out, extract, or trim a portion of an image. Also use when the user
-  wants to resize an image to specific dimensions by cropping (e.g. "make it
-  square", "crop to Instagram format", "crop to widescreen 16:9").
-  This skill requires an existing image as input — it does NOT generate new images.
+description: "Crop a rectangular region from an existing image. Use this skill when the user wants to cut out, extract, or trim a portion of an image. Also use when the user wants to resize an image to specific dimensions by cropping (e.g. "make it square", "crop to Instagram format", "crop to widescreen 16:9"). This skill requires an existing image as input — it does NOT generate new images."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["image-processing", "crop", "resize", "utility", "comfyui"]
-metadata.clawdbot.category: "image-processing"
-metadata.clawdbot.input_type: "image/png"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-img2img-remix"]
-metadata.clawdbot.priority: 90
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "image-processing",
+            "crop",
+            "resize",
+            "utility",
+            "comfyui"
+        ],
+        "category": "image-processing",
+        "input_type": "image/png",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-img2video",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [
+            "comfyui-generate-image",
+            "comfyui-portrait",
+            "comfyui-landscape-batch",
+            "comfyui-lora",
+            "comfyui-img2img-remix"
+        ],
+        "priority": 90,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Image Crop

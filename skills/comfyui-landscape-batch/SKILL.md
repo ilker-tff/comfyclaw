@@ -1,24 +1,46 @@
 ---
 name: comfyui-landscape-batch
-description: >
-  Generate multiple landscape image variations in a single batch.
-  Use this skill when the user wants landscape, scenery, environment, or
-  panoramic images — especially when they want multiple options to choose from.
-  Produces 3 variations by default at 768x512 (widescreen 3:2 aspect ratio).
-  Use this instead of comfyui-generate-image when the user says "landscape",
-  "scenery", "environment", "panorama", or wants "a few options" / "variations".
+description: "Generate multiple landscape image variations in a single batch. Use this skill when the user wants landscape, scenery, environment, or panoramic images — especially when they want multiple options to choose from. Produces 3 variations by default at 768x512 (widescreen 3:2 aspect ratio). Use this instead of comfyui-generate-image when the user says "landscape", "scenery", "environment", "panorama", or wants "a few options" / "variations"."
 homepage: https://github.com/ilker-tff/comfyclaw
-metadata.clawdbot.os: ["darwin", "linux"]
-metadata.clawdbot.requires.bins: ["python3"]
-metadata.clawdbot.requires.env: ["COMFY_URL", "COMFY_AUTH_HEADER"]
-metadata.clawdbot.files: ["scripts/*"]
-metadata.clawdbot.tags: ["landscape", "batch", "scenery", "environment", "panoramic", "comfyui"]
-metadata.clawdbot.category: "media-generation"
-metadata.clawdbot.input_type: "text"
-metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-download-image"]
-metadata.clawdbot.accepts_input_from: []
-metadata.clawdbot.priority: 80
+metadata: {
+    "openclaw": {
+        "os": [
+            "darwin",
+            "linux"
+        ],
+        "requires": {
+            "bins": [
+                "python3"
+            ],
+            "env": [
+                "COMFY_URL",
+                "COMFY_AUTH_HEADER"
+            ]
+        },
+        "tags": [
+            "landscape",
+            "batch",
+            "scenery",
+            "environment",
+            "panoramic",
+            "comfyui"
+        ],
+        "category": "media-generation",
+        "input_type": "text",
+        "output_type": "image/png",
+        "output_can_feed_into": [
+            "comfyui-crop",
+            "comfyui-img2img-remix",
+            "comfyui-crop-then-refine",
+            "comfyui-download-image"
+        ],
+        "accepts_input_from": [],
+        "priority": 80,
+        "files": [
+            "scripts/*"
+        ]
+    }
+}
 ---
 
 # ComfyUI Landscape Batch
