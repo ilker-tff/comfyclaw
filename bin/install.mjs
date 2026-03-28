@@ -342,35 +342,14 @@ async function main() {
     // 1. Server URL
     const comfyUrl = await ask(rl, "  ComfyUI server URL", DEFAULT_URL);
 
-    // 2. Auth method
-    const authMethod = await ask(rl, "  Auth method (1=username/password, 2=API key)", "2");
-
-    let authHeader;
-
-    if (authMethod === "2") {
-      // API key auth
-      rl.close();
-      const apiKey = await askHidden(null, "  API key");
-      if (!apiKey) {
-        console.log(red("\n  Error: API key is required."));
-        process.exit(1);
-      }
-      authHeader = `Bearer ${apiKey}`;
-    } else {
-      // Username/password auth
-      const username = await ask(rl, "  Username");
-      if (!username) {
-        console.log(red("\n  Error: Username is required."));
-        process.exit(1);
-      }
-      rl.close();
-      const password = await askHidden(null, "  Password");
-      if (!password) {
-        console.log(red("\n  Error: Password is required."));
-        process.exit(1);
-      }
-      authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
+    // 2. API key
+    rl.close();
+    const apiKey = await askHidden(null, "  API key");
+    if (!apiKey) {
+      console.log(red("\n  Error: API key is required."));
+      process.exit(1);
     }
+    const authHeader = `Bearer ${apiKey}`;
 
     // 3. Test connection
     console.log("");
