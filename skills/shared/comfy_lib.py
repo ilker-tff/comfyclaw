@@ -68,6 +68,25 @@ def make_request(url, data=None, method="GET"):
         sys.exit(1)
 
 
+def _safe_request(url, data=None, method="GET", timeout=30):
+    """Like make_request but returns (data, error) instead of exiting."""
+    body = json.dumps(data).encode("utf-8") if data else None
+    req = urllib.request.Request(url, data=body, headers=_headers(), method=method)
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8")
+            if raw:
+                return json.loads(raw), None
+            return {}, None
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode("utf-8", errors="replace")
+        return None, f"HTTP {e.code}: {error_body}"
+    except urllib.error.URLError as e:
+        return None, f"Connection error: {e.reason}"
+    except Exception as e:
+        return None, str(e)
+
+
 def download_binary(url, dest_path):
     """Download binary content (image/video) to a file."""
     req = urllib.request.Request(url, headers=_headers(content_type=None), method="GET")
@@ -106,6 +125,36 @@ def upload_image(filepath):
         sys.exit(1)
 
 
+def upload_video(filepath):
+    """Upload a local video to ComfyUI /upload/image endpoint. Returns the server filename."""
+    import mimetypes
+    boundary = "----ComfyUploadBoundary"
+    filename = os.path.basename(filepath)
+    mime = mimetypes.guess_type(filepath)[0] or "video/mp4"
+
+    with open(filepath, "rb") as f:
+        file_data = f.read()
+
+    body = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="image"; filename="{filename}"\r\n'
+        f"Content-Type: {mime}\r\n\r\n"
+    ).encode("utf-8") + file_data + f"\r\n--{boundary}--\r\n".encode("utf-8")
+
+    url = f"{COMFY_URL}/upload/image"
+    headers = _headers(content_type=f"multipart/form-data; boundary={boundary}")
+    req = urllib.request.Request(url, data=body, headers=headers, method="POST")
+
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            result = json.loads(resp.read().decode("utf-8"))
+            return result.get("name", filename)
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode("utf-8", errors="replace")
+        print(f"Upload failed - HTTP {e.code}: {error_body}", file=sys.stderr)
+        sys.exit(1)
+
+
 # ---------------------------------------------------------------------------
 # ComfyUI API interaction
 # ---------------------------------------------------------------------------
@@ -121,10 +170,11 @@ def queue_prompt(workflow):
     return prompt_id
 
 
-def wait_for_completion(prompt_id):
+def wait_for_completion(prompt_id, timeout=None):
     """Poll ComfyUI history until the prompt completes. Returns output metadata."""
+    max_wait = timeout or TIMEOUT_SECONDS
     start = time.time()
-    while time.time() - start < TIMEOUT_SECONDS:
+    while time.time() - start < max_wait:
         try:
             history = make_request(f"{COMFY_URL}/history/{prompt_id}")
         except SystemExit:
@@ -161,7 +211,7 @@ def wait_for_completion(prompt_id):
 
         time.sleep(POLL_INTERVAL)
 
-    print(f"Timeout after {TIMEOUT_SECONDS}s waiting for generation", file=sys.stderr)
+    print(f"Timeout after {max_wait}s waiting for generation", file=sys.stderr)
     sys.exit(1)
 
 
@@ -176,3 +226,213 @@ def download_output(meta, dest_path):
     download_binary(url, dest_path)
     size_kb = os.path.getsize(dest_path) / 1024
     return size_kb
+
+
+# ---------------------------------------------------------------------------
+# Utility functions (used by utility skills)
+# ---------------------------------------------------------------------------
+
+def get_progress(prompt_id=None):
+    """Get generation progress. Tries /progress first, falls back to queue/history."""
+    # Try /progress endpoint first
+    progress_url = f"{COMFY_URL}/progress"
+    data, err = _safe_request(progress_url)
+
+    if data and not err:
+        value = data.get("value", 0)
+        max_val = data.get("max", 0)
+        if max_val > 0:
+            pct = round((value / max_val) * 100, 1)
+            return {
+                "status": "running" if pct < 100 else "done",
+                "progress_percent": pct,
+                "value": value,
+                "max": max_val,
+                "state": "generating",
+                "source": "progress_endpoint",
+            }
+
+    # Fallback: use queue + history
+    queue_data, q_err = _safe_request(f"{COMFY_URL}/queue")
+    if q_err:
+        return {"status": "error", "progress_percent": 0, "state": "unknown", "source": "error", "error": q_err}
+
+    running = queue_data.get("queue_running", [])
+    pending = queue_data.get("queue_pending", [])
+
+    # Check if our prompt is running
+    if prompt_id:
+        for item in running:
+            if len(item) > 1 and item[1] == prompt_id:
+                elapsed = time.time() - item[0] if isinstance(item[0], (int, float)) else 0
+                # Estimate: ramp from 20% to 95% over expected time
+                pct = min(95, 20 + (elapsed / 120) * 75)
+                return {
+                    "status": "running",
+                    "progress_percent": round(pct, 1),
+                    "state": "generating",
+                    "source": "queue_fallback",
+                    "queue_running": len(running),
+                    "queue_pending": len(pending),
+                }
+        for item in pending:
+            if len(item) > 1 and item[1] == prompt_id:
+                pct = min(15, 5 + (len(pending) - 1) * 2)
+                return {
+                    "status": "pending",
+                    "progress_percent": round(pct, 1),
+                    "state": "queued",
+                    "source": "queue_fallback",
+                    "queue_running": len(running),
+                    "queue_pending": len(pending),
+                }
+
+        # Check history for completion
+        hist_data, h_err = _safe_request(f"{COMFY_URL}/history/{prompt_id}")
+        if hist_data and prompt_id in hist_data:
+            return {
+                "status": "done",
+                "progress_percent": 100,
+                "state": "completed",
+                "source": "history",
+            }
+
+    # Generic status
+    if running:
+        return {
+            "status": "busy",
+            "progress_percent": 50,
+            "state": "server_busy",
+            "source": "queue_fallback",
+            "queue_running": len(running),
+            "queue_pending": len(pending),
+        }
+
+    return {
+        "status": "idle",
+        "progress_percent": 0,
+        "state": "idle",
+        "source": "queue_fallback",
+        "queue_running": 0,
+        "queue_pending": len(pending),
+    }
+
+
+def get_queue_status():
+    """Get queue status: running and pending job counts."""
+    data, err = _safe_request(f"{COMFY_URL}/queue")
+    if err:
+        return {"status": "error", "error": err, "running_count": 0, "pending_count": 0, "running": [], "pending": []}
+
+    running = data.get("queue_running", [])
+    pending = data.get("queue_pending", [])
+    return {
+        "status": "ok",
+        "running_count": len(running),
+        "pending_count": len(pending),
+        "running": running,
+        "pending": pending,
+    }
+
+
+def get_server_status():
+    """Get server health: system stats + queue state."""
+    stats_data, stats_err = _safe_request(f"{COMFY_URL}/system_stats")
+    queue_info = get_queue_status()
+
+    if stats_err:
+        return {
+            "status": "error",
+            "error": stats_err,
+            "busy": False,
+            "running_count": 0,
+            "pending_count": 0,
+            "queue": {},
+            "system_stats": {},
+        }
+
+    return {
+        "status": "ok",
+        "busy": queue_info["running_count"] > 0,
+        "running_count": queue_info["running_count"],
+        "pending_count": queue_info["pending_count"],
+        "queue": queue_info,
+        "system_stats": stats_data,
+    }
+
+
+def validate_server_models(model_names=None, include_groups=None, case_sensitive=False):
+    """List available models and validate requested ones exist."""
+    data, err = _safe_request(f"{COMFY_URL}/object_info")
+    if err:
+        return {"status": "error", "error": err, "available": {}, "all_model_names": [], "exists": {}, "missing": []}
+
+    # Known model loader nodes and their input fields
+    loaders = {
+        "checkpoints": ("CheckpointLoaderSimple", "ckpt_name"),
+        "vae": ("VAELoader", "vae_name"),
+        "clip": ("CLIPLoader", "clip_name"),
+        "lora": ("LoraLoader", "lora_name"),
+        "unet": ("UNETLoader", "unet_name"),
+    }
+
+    available = {}
+    all_names = []
+
+    for group, (node_type, field_name) in loaders.items():
+        if include_groups and group not in include_groups:
+            continue
+        node_info = data.get(node_type, {})
+        inputs = node_info.get("input", {}).get("required", {})
+        field_info = inputs.get(field_name, [])
+        names = field_info[0] if field_info and isinstance(field_info[0], list) else []
+        available[group] = names
+        all_names.extend(names)
+
+    # Validate requested models
+    exists = {}
+    missing = []
+    if model_names:
+        for name in model_names:
+            if case_sensitive:
+                found = name in all_names
+            else:
+                found = name.lower() in [n.lower() for n in all_names]
+            exists[name] = found
+            if not found:
+                missing.append(name)
+
+    return {
+        "status": "ok",
+        "available": available,
+        "all_model_names": all_names,
+        "exists": exists,
+        "missing": missing,
+    }
+
+
+def list_comfy_assets():
+    """List files in ComfyUI input and output directories."""
+    results = {"status": "ok", "input": [], "output": []}
+
+    for asset_type in ["input", "output"]:
+        url = f"{COMFY_URL}/view?type={asset_type}"
+        # The /view endpoint without filename lists directory contents on some setups
+        # Fall back to empty list if it doesn't work
+        data, err = _safe_request(url)
+        if data and isinstance(data, list):
+            results[asset_type] = data
+        elif err:
+            # Try alternative: some ComfyUI versions use different endpoints
+            results[asset_type] = []
+
+    return results
+
+
+def delete_job(prompt_id):
+    """Delete/cancel a job from the ComfyUI queue."""
+    payload = {"delete": [prompt_id]}
+    data, err = _safe_request(f"{COMFY_URL}/queue", data=payload, method="POST")
+    if err:
+        return {"status": "error", "error": err, "prompt_id": prompt_id}
+    return {"status": "ok", "deleted": prompt_id}

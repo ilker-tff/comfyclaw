@@ -17,8 +17,8 @@ metadata.clawdbot.tags: ["image-to-image", "style-transfer", "remix", "transform
 metadata.clawdbot.category: "image-processing"
 metadata.clawdbot.input_type: "image/png"
 metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine"]
-metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-crop"]
+metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
+metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-crop", "comfyui-upload-image"]
 metadata.clawdbot.priority: 85
 ---
 

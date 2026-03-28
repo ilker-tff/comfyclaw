@@ -15,7 +15,7 @@ metadata.clawdbot.tags: ["image-processing", "crop", "resize", "utility", "comfy
 metadata.clawdbot.category: "image-processing"
 metadata.clawdbot.input_type: "image/png"
 metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-img2img-remix", "comfyui-crop-then-refine"]
+metadata.clawdbot.output_can_feed_into: ["comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
 metadata.clawdbot.accepts_input_from: ["comfyui-generate-image", "comfyui-portrait", "comfyui-landscape-batch", "comfyui-lora", "comfyui-img2img-remix"]
 metadata.clawdbot.priority: 90
 ---

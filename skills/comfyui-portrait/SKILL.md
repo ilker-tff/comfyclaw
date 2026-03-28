@@ -15,7 +15,7 @@ metadata.clawdbot.tags: ["portrait", "face", "character", "headshot", "comfyui"]
 metadata.clawdbot.category: "media-generation"
 metadata.clawdbot.input_type: "text"
 metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine"]
+metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-img2video", "comfyui-download-image"]
 metadata.clawdbot.accepts_input_from: []
 metadata.clawdbot.priority: 95
 ---

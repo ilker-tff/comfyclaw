@@ -16,7 +16,7 @@ metadata.clawdbot.tags: ["landscape", "batch", "scenery", "environment", "panora
 metadata.clawdbot.category: "media-generation"
 metadata.clawdbot.input_type: "text"
 metadata.clawdbot.output_type: "image/png"
-metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine"]
+metadata.clawdbot.output_can_feed_into: ["comfyui-crop", "comfyui-img2img-remix", "comfyui-crop-then-refine", "comfyui-download-image"]
 metadata.clawdbot.accepts_input_from: []
 metadata.clawdbot.priority: 80
 ---

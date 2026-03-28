@@ -15,7 +15,7 @@ metadata.clawdbot.tags: ["animation", "animated", "webp", "gif", "sticker", "loo
 metadata.clawdbot.category: "media-generation"
 metadata.clawdbot.input_type: "text"
 metadata.clawdbot.output_type: "image/webp"
-metadata.clawdbot.output_can_feed_into: []
+metadata.clawdbot.output_can_feed_into: ["comfyui-download-video"]
 metadata.clawdbot.accepts_input_from: []
 metadata.clawdbot.priority: 70
 ---

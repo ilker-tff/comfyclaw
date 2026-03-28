@@ -16,7 +16,7 @@ metadata.clawdbot.tags: ["video", "mp4", "text-to-video", "clip", "motion", "cin
 metadata.clawdbot.category: "media-generation"
 metadata.clawdbot.input_type: "text"
 metadata.clawdbot.output_type: "video/mp4"
-metadata.clawdbot.output_can_feed_into: []
+metadata.clawdbot.output_can_feed_into: ["comfyui-download-video"]
 metadata.clawdbot.accepts_input_from: []
 metadata.clawdbot.priority: 70
 ---

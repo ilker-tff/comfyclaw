@@ -1,7 +1,7 @@
 {
   "name": "comfyclaw",
-  "version": "2.0.0",
-  "description": "OpenClaw skill pack: 9 ComfyUI skills for image generation, video, cropping, remixing, and more",
+  "version": "3.0.0",
+  "description": "OpenClaw skill pack: 25 ComfyUI skills for image generation, video, cropping, remixing, previews, monitoring, and more",
   "bin": {
     "comfyclaw": "bin/install.mjs"
   },
@@ -13,12 +13,16 @@
     "openclaw",
     "comfyui",
     "stable-diffusion",
+    "flux",
+    "ltxv",
     "text2img",
     "img2img",
+    "img2video",
     "video",
     "crop",
     "portrait",
     "lora",
+    "preview",
     "ai",
     "image-generation",
     "skill"
