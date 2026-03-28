@@ -343,7 +343,7 @@ async function main() {
     const comfyUrl = await ask(rl, "  ComfyUI server URL", DEFAULT_URL);
 
     // 2. Auth method
-    const authMethod = await ask(rl, "  Auth method (1=username/password, 2=API key)", "1");
+    const authMethod = await ask(rl, "  Auth method (1=username/password, 2=API key)", "2");
 
     let authHeader;
 
