@@ -20,20 +20,61 @@ import urllib.parse
 
 
 # ---------------------------------------------------------------------------
-# Configuration (from environment)
+# Configuration — env vars first, then openclaw.json fallback
 # ---------------------------------------------------------------------------
 
-COMFY_URL = os.environ.get("COMFY_URL", "").rstrip("/")
-COMFY_AUTH_HEADER = os.environ.get("COMFY_AUTH_HEADER", "")
+def _load_from_openclaw_config(skill_name="comfyui-generate-image"):
+    """Fallback: read COMFY_URL and COMFY_AUTH_HEADER from openclaw.json."""
+    config_path = os.path.join(os.path.expanduser("~"), ".openclaw", "openclaw.json")
+    if not os.path.exists(config_path):
+        return {}, {}
+    try:
+        with open(config_path, "r") as f:
+            config = json.load(f)
+        entries = config.get("skills", {}).get("entries", {})
+        # Try the exact skill name first, then any comfyui-* skill
+        for key in [skill_name] + [k for k in entries if k.startswith("comfyui-")]:
+            entry = entries.get(key, {})
+            env = entry.get("env", {})
+            if env.get("COMFY_URL"):
+                return env, entry
+        return {}, {}
+    except Exception:
+        return {}, {}
+
+
+def _resolve_env():
+    """Resolve COMFY_URL and COMFY_AUTH_HEADER from env or openclaw.json."""
+    url = os.environ.get("COMFY_URL", "").rstrip("/")
+    auth = os.environ.get("COMFY_AUTH_HEADER", "")
+
+    if not url:
+        fallback_env, _ = _load_from_openclaw_config()
+        url = fallback_env.get("COMFY_URL", "").rstrip("/")
+        auth = auth or fallback_env.get("COMFY_AUTH_HEADER", "")
+        # Also inject into os.environ so subprocesses see them
+        if url:
+            os.environ["COMFY_URL"] = url
+        if auth:
+            os.environ["COMFY_AUTH_HEADER"] = auth
+
+    return url, auth
+
+
+COMFY_URL, COMFY_AUTH_HEADER = _resolve_env()
 CHECKPOINT = os.environ.get("COMFY_CKPT", "sd1.5/juggernaut_reborn.safetensors")
 TIMEOUT_SECONDS = int(os.environ.get("COMFY_TIMEOUT", "180"))
 POLL_INTERVAL = 1.0
 
 
 def check_env():
-    """Validate that required environment variables are set."""
+    """Validate that required configuration is available."""
+    global COMFY_URL, COMFY_AUTH_HEADER
+    # Re-resolve in case env was set after module import
     if not COMFY_URL:
-        print("Error: COMFY_URL environment variable not set", file=sys.stderr)
+        COMFY_URL, COMFY_AUTH_HEADER = _resolve_env()
+    if not COMFY_URL:
+        print("Error: COMFY_URL not set (checked env vars and ~/.openclaw/openclaw.json)", file=sys.stderr)
         sys.exit(1)
     if not COMFY_AUTH_HEADER:
         print("Warning: COMFY_AUTH_HEADER not set, attempting without auth", file=sys.stderr)
