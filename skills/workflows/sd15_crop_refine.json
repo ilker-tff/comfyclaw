@@ -1,0 +1,55 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {"image": "{{image}}"}
+  },
+  "2": {
+    "class_type": "ImageCrop",
+    "inputs": {
+      "image": ["1", 0],
+      "x": "{{x}}",
+      "y": "{{y}}",
+      "width": "{{width}}",
+      "height": "{{height}}"
+    }
+  },
+  "3": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {"ckpt_name": "{{checkpoint}}"}
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {"clip": ["3", 1], "text": "{{prompt}}"}
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {"clip": ["3", 1], "text": "{{negative}}"}
+  },
+  "6": {
+    "class_type": "VAEEncode",
+    "inputs": {"pixels": ["2", 0], "vae": ["3", 2]}
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["3", 0],
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["6", 0],
+      "seed": "{{seed}}",
+      "steps": "{{steps}}",
+      "cfg": "{{cfg}}",
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": "{{denoise}}"
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {"samples": ["7", 0], "vae": ["3", 2]}
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {"images": ["8", 0], "filename_prefix": "openclaw_crop_refine"}
+  }
+}

@@ -10,10 +10,16 @@ import { homedir } from "node:os";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DEFAULT_URL = "http://34.30.216.121";
 
-// ── Skill registry ────────────────────────────────────────────────────────
+// New unified skills (v3)
+const SKILLS = [
+  "comfyui-generate",
+  "comfyui-edit",
+  "comfyui-video",
+  "comfyui-workflow",
+];
 
-// Generation skills
-const GENERATION_SKILLS = [
+// Legacy skills (for uninstall cleanup — includes v1, v2, and v2.5 skills)
+const LEGACY_SKILLS = [
   "comfyui-generate-image",
   "comfyui-portrait",
   "comfyui-landscape-batch",
@@ -28,10 +34,6 @@ const GENERATION_SKILLS = [
   "comfyui-preview-image",
   "comfyui-preview-img2img",
   "comfyui-preview-character",
-];
-
-// Utility skills
-const UTILITY_SKILLS = [
   "comfyui-upload-image",
   "comfyui-upload-video",
   "comfyui-download-image",
@@ -42,15 +44,9 @@ const UTILITY_SKILLS = [
   "comfyui-validate-models",
   "comfyui-list-assets",
   "comfyui-delete-job",
-];
-
-// Reference-only (no env vars needed)
-const REFERENCE_SKILLS = [
   "comfyui-workflow-examples",
+  "comfyui-text2img",
 ];
-
-const ALL_SKILLS = [...GENERATION_SKILLS, ...UTILITY_SKILLS, ...REFERENCE_SKILLS];
-const SKILLS_WITH_ENV = [...GENERATION_SKILLS, ...UTILITY_SKILLS];
 
 // ── Pretty output ──────────────────────────────────────────────────────────
 
@@ -59,7 +55,6 @@ const green = (s) => `\x1b[32m${s}\x1b[0m`;
 const red = (s) => `\x1b[31m${s}\x1b[0m`;
 const yellow = (s) => `\x1b[33m${s}\x1b[0m`;
 const dim = (s) => `\x1b[2m${s}\x1b[0m`;
-const cyan = (s) => `\x1b[36m${s}\x1b[0m`;
 
 // ── Readline helpers ───────────────────────────────────────────────────────
 
@@ -135,21 +130,19 @@ function updateOpenclawConfig(comfyUrl, authHeader) {
   if (!config.skills) config.skills = {};
   if (!config.skills.entries) config.skills.entries = {};
 
-  // Register each skill with shared env vars
-  for (const skill of SKILLS_WITH_ENV) {
+  // Remove legacy skill entries
+  for (const skill of LEGACY_SKILLS) {
+    delete config.skills.entries[skill];
+  }
+
+  // Register each new skill with shared env vars
+  for (const skill of SKILLS) {
     config.skills.entries[skill] = {
       enabled: true,
       env: {
         COMFY_URL: comfyUrl,
         COMFY_AUTH_HEADER: authHeader,
       },
-    };
-  }
-
-  // Reference skills — no env needed
-  for (const skill of REFERENCE_SKILLS) {
-    config.skills.entries[skill] = {
-      enabled: true,
     };
   }
 
@@ -201,12 +194,11 @@ function findSkillsDir() {
     join("/usr", "local", "lib", "node_modules", "openclaw", "skills"),
     join("/usr", "lib", "node_modules", "openclaw", "skills"),
   ];
-
   for (const fb of fallbacks) {
     if (existsSync(fb)) return fb;
   }
 
-  // 3. Last resort: workspace dir
+  // 3. Last resort
   return join(homedir(), ".openclaw", "workspace", "skills");
 }
 
@@ -214,11 +206,11 @@ function findSkillsDir() {
 
 function installSkillFiles() {
   const skillsSource = join(__dirname, "..", "skills");
-  const sharedSource = join(skillsSource, "shared", "comfy_lib.py");
   const baseTarget = findSkillsDir();
   const installed = [];
 
-  for (const skill of ALL_SKILLS) {
+  // Install new unified skills
+  for (const skill of SKILLS) {
     const source = join(skillsSource, skill);
     if (!existsSync(source)) continue;
 
@@ -228,10 +220,32 @@ function installSkillFiles() {
     installed.push(skill);
   }
 
-  // Install shared library at _shared/comfy_lib.py
+  // Copy shared library to _shared/
+  const sharedSource = join(skillsSource, "shared");
   const sharedTarget = join(baseTarget, "_shared");
   mkdirSync(sharedTarget, { recursive: true });
-  cpSync(sharedSource, join(sharedTarget, "comfy_lib.py"));
+  cpSync(join(sharedSource, "comfy_lib.py"), join(sharedTarget, "comfy_lib.py"));
+
+  // Copy shared/ directory (catalog.py, catalog.json, learning.py) into the skills dir
+  const sharedSkillsTarget = join(baseTarget, "shared");
+  mkdirSync(sharedSkillsTarget, { recursive: true });
+  cpSync(sharedSource, sharedSkillsTarget, { recursive: true });
+
+  // Copy workflows/ directory
+  const workflowsSource = join(skillsSource, "workflows");
+  if (existsSync(workflowsSource)) {
+    const workflowsTarget = join(baseTarget, "workflows");
+    mkdirSync(workflowsTarget, { recursive: true });
+    cpSync(workflowsSource, workflowsTarget, { recursive: true });
+  }
+
+  // Remove legacy skill directories
+  for (const skill of LEGACY_SKILLS) {
+    const legacyPath = join(baseTarget, skill);
+    if (existsSync(legacyPath)) {
+      rmSync(legacyPath, { recursive: true, force: true });
+    }
+  }
 
   return { baseTarget, installed };
 }
@@ -249,8 +263,8 @@ function uninstall() {
   const configPath = join(homedir(), ".openclaw", "openclaw.json");
   let removedCount = 0;
 
-  // Remove all skill directories
-  for (const skill of ALL_SKILLS) {
+  // Remove all skill directories (new + legacy)
+  for (const skill of [...SKILLS, ...LEGACY_SKILLS]) {
     const skillPath = join(baseTarget, skill);
     if (existsSync(skillPath)) {
       rmSync(skillPath, { recursive: true, force: true });
@@ -259,19 +273,12 @@ function uninstall() {
     }
   }
 
-  // Remove shared library
-  const sharedPath = join(baseTarget, "_shared");
-  if (existsSync(sharedPath)) {
-    rmSync(sharedPath, { recursive: true, force: true });
-  }
-
-  // Also remove legacy skill names if present
-  for (const legacy of ["comfyui-text2img"]) {
-    const legacyPath = join(baseTarget, legacy);
-    if (existsSync(legacyPath)) {
-      rmSync(legacyPath, { recursive: true, force: true });
-      console.log(`  Removed: ${dim(`${legacy} (legacy)`)}`);
-      removedCount++;
+  // Remove shared libraries and workflows
+  for (const dir of ["_shared", "shared", "workflows"]) {
+    const dirPath = join(baseTarget, dir);
+    if (existsSync(dirPath)) {
+      rmSync(dirPath, { recursive: true, force: true });
+      console.log(`  Removed: ${dim(dir)}`);
     }
   }
 
@@ -284,7 +291,7 @@ function uninstall() {
     try {
       const config = JSON.parse(readFileSync(configPath, "utf8"));
       let removedEntries = 0;
-      for (const skill of [...ALL_SKILLS, "comfyui-text2img"]) {
+      for (const skill of [...SKILLS, ...LEGACY_SKILLS]) {
         if (config.skills?.entries?.[skill]) {
           delete config.skills.entries[skill];
           removedEntries++;
@@ -319,21 +326,7 @@ async function main() {
 
   console.log("");
   console.log(bold("  ComfyClaw — OpenClaw Installer"));
-  console.log(dim(`  ${GENERATION_SKILLS.length} generation + ${UTILITY_SKILLS.length} utility + ${REFERENCE_SKILLS.length} reference skills`));
-  console.log("");
-
-  console.log(dim("  Generation skills:"));
-  for (const skill of GENERATION_SKILLS) {
-    console.log(dim(`    ${skill}`));
-  }
-  console.log(dim("  Utility skills:"));
-  for (const skill of UTILITY_SKILLS) {
-    console.log(dim(`    ${skill}`));
-  }
-  console.log(dim("  Reference:"));
-  for (const skill of REFERENCE_SKILLS) {
-    console.log(dim(`    ${skill}`));
-  }
+  console.log(dim("  4 unified skills: generate, edit, video, workflow"));
   console.log("");
 
   const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -342,16 +335,20 @@ async function main() {
     // 1. Server URL
     const comfyUrl = await ask(rl, "  ComfyUI server URL", DEFAULT_URL);
 
-    // 2. API key
+    // Close readline so we can handle raw stdin for API key
     rl.close();
-    const apiKey = await askHidden(null, "  API key");
+
+    // 2. API Key (hidden input)
+    const apiKey = await askHidden(null, "  API Key");
     if (!apiKey) {
-      console.log(red("\n  Error: API key is required."));
+      console.log(red("\n  Error: API Key is required."));
       process.exit(1);
     }
+
+    // 3. Build auth header
     const authHeader = `Bearer ${apiKey}`;
 
-    // 3. Test connection
+    // 4. Test connection
     console.log("");
     process.stdout.write(`  Testing connection to ${dim(comfyUrl)}... `);
     const status = testConnection(comfyUrl, authHeader);
@@ -360,7 +357,7 @@ async function main() {
       console.log(green("connected!"));
     } else if (status === 401 || status === 403) {
       console.log(red("auth failed."));
-      console.log(red("  Check your credentials."));
+      console.log(red("  Check your API key."));
       process.exit(1);
     } else if (status === 0) {
       console.log(yellow("unreachable."));
@@ -370,37 +367,23 @@ async function main() {
       console.log(yellow("  Saving config anyway."));
     }
 
-    // 4. Install all skill files
+    // 5. Install all skill files
     console.log("");
-    process.stdout.write(`  Installing ${ALL_SKILLS.length} skills... `);
+    process.stdout.write(`  Installing ${SKILLS.length} skills... `);
     const { baseTarget, installed } = installSkillFiles();
     console.log(green("done."));
-    console.log("");
 
-    const genInstalled = installed.filter((s) => GENERATION_SKILLS.includes(s));
-    const utilInstalled = installed.filter((s) => UTILITY_SKILLS.includes(s));
-    const refInstalled = installed.filter((s) => REFERENCE_SKILLS.includes(s));
-
-    if (genInstalled.length) {
-      console.log(`  ${cyan("Generation:")}`);
-      for (const skill of genInstalled) console.log(`    ${green("✓")} ${skill}`);
-    }
-    if (utilInstalled.length) {
-      console.log(`  ${cyan("Utility:")}`);
-      for (const skill of utilInstalled) console.log(`    ${green("✓")} ${skill}`);
-    }
-    if (refInstalled.length) {
-      console.log(`  ${cyan("Reference:")}`);
-      for (const skill of refInstalled) console.log(`    ${green("✓")} ${skill}`);
+    for (const skill of installed) {
+      console.log(`    ${green("✓")} ${skill}`);
     }
 
-    // 5. Update config
+    // 6. Update config
     console.log("");
     process.stdout.write(`  Updating openclaw.json... `);
     const configPath = updateOpenclawConfig(comfyUrl, authHeader);
     console.log(green("done."));
 
-    // 6. Done
+    // 7. Done
     console.log("");
     console.log(green(bold(`  ✓ ${installed.length} skills installed successfully!`)));
     console.log("");
@@ -411,10 +394,10 @@ async function main() {
     console.log("");
     console.log(dim("  Try these:"));
     console.log(dim('    "Generate an image of a sunset over mountains"'));
-    console.log(dim('    "Create a portrait and make it look like a watercolor"'));
-    console.log(dim('    "Check server status"'));
-    console.log(dim('    "Upload my photo and turn it into a video"'));
-    console.log(dim('    "Give me 3 landscape options, I\'ll pick one to restyle"'));
+    console.log(dim('    "Create a portrait of a fantasy warrior"'));
+    console.log(dim('    "Generate a landscape and crop it to widescreen"'));
+    console.log(dim('    "Make a short video clip of ocean waves"'));
+    console.log(dim('    "List available ComfyUI workflows"'));
     console.log("");
   } catch (err) {
     console.error(red(`\n  Error: ${err.message}`));

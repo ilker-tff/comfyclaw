@@ -1,0 +1,45 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {"image": "{{image}}"}
+  },
+  "2": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {"ckpt_name": "{{checkpoint}}"}
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {"clip": ["2", 1], "text": "{{prompt}}"}
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {"clip": ["2", 1], "text": "{{negative}}"}
+  },
+  "5": {
+    "class_type": "VAEEncode",
+    "inputs": {"pixels": ["1", 0], "vae": ["2", 2]}
+  },
+  "6": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["2", 0],
+      "positive": ["3", 0],
+      "negative": ["4", 0],
+      "latent_image": ["5", 0],
+      "seed": "{{seed}}",
+      "steps": "{{steps}}",
+      "cfg": "{{cfg}}",
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": "{{denoise}}"
+    }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": {"samples": ["6", 0], "vae": ["2", 2]}
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": {"images": ["7", 0], "filename_prefix": "openclaw_remix"}
+  }
+}
